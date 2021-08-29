@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TipPooler_POC.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Intitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,15 +25,16 @@ namespace TipPooler_POC.Migrations
                 name: "SalesJournals",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    ListId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sale = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SalesJournals", x => x.UserId);
+                    table.PrimaryKey("PK_SalesJournals", x => x.ListId);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,57 +51,34 @@ namespace TipPooler_POC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShiftLists",
+                name: "Shifts",
                 columns: table => new
                 {
                     ListId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShiftLists", x => x.ListId);
+                    table.PrimaryKey("PK_Shifts", x => x.ListId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "TipJournals",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    ListId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Tip = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipJournals", x => x.UserId);
+                    table.PrimaryKey("PK_TipJournals", x => x.ListId);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Shifts",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserType = table.Column<int>(type: "int", nullable: false),
-                    StartTime = table.Column<int>(type: "int", nullable: false),
-                    EndTime = table.Column<int>(type: "int", nullable: false),
-                    ShiftListListId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Shifts", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_Shifts_ShiftLists_ShiftListListId",
-                        column: x => x.ShiftListListId,
-                        principalTable: "ShiftLists",
-                        principalColumn: "ListId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Shifts_ShiftListListId",
-                table: "Shifts",
-                column: "ShiftListListId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -119,9 +97,6 @@ namespace TipPooler_POC.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipJournals");
-
-            migrationBuilder.DropTable(
-                name: "ShiftLists");
         }
     }
 }

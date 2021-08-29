@@ -39,7 +39,7 @@ namespace TipPooler_POC.Migrations
 
             modelBuilder.Entity("TipPooler_POC.DataModels.SalesJournal", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("ListId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -53,33 +53,31 @@ namespace TipPooler_POC.Migrations
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ListId");
 
                     b.ToTable("SalesJournals");
                 });
 
             modelBuilder.Entity("TipPooler_POC.DataModels.Shift", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("ListId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EndTime")
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShiftListListId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StartTime")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("ShiftListListId");
+                    b.HasKey("ListId");
 
                     b.ToTable("Shifts");
                 });
@@ -99,21 +97,9 @@ namespace TipPooler_POC.Migrations
                     b.ToTable("ShiftChanges");
                 });
 
-            modelBuilder.Entity("TipPooler_POC.DataModels.ShiftList", b =>
-                {
-                    b.Property<int>("ListId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.HasKey("ListId");
-
-                    b.ToTable("ShiftLists");
-                });
-
             modelBuilder.Entity("TipPooler_POC.DataModels.TipJournal", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("ListId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -124,21 +110,12 @@ namespace TipPooler_POC.Migrations
                     b.Property<double>("Tip")
                         .HasColumnType("float");
 
-                    b.HasKey("UserId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ListId");
 
                     b.ToTable("TipJournals");
-                });
-
-            modelBuilder.Entity("TipPooler_POC.DataModels.Shift", b =>
-                {
-                    b.HasOne("TipPooler_POC.DataModels.ShiftList", null)
-                        .WithMany("ShiftLists")
-                        .HasForeignKey("ShiftListListId");
-                });
-
-            modelBuilder.Entity("TipPooler_POC.DataModels.ShiftList", b =>
-                {
-                    b.Navigation("ShiftLists");
                 });
 #pragma warning restore 612, 618
         }

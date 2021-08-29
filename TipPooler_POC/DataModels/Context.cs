@@ -9,16 +9,15 @@ namespace TipPooler_POC.DataModels
 {
     class Context: DbContext
     {
-        DbSet<Employee> Employees { get; set; }
-        DbSet<SalesJournal> SalesJournals { get; set; }
-        DbSet<Shift> Shifts { get; set; }
-        DbSet<ShiftChange> ShiftChanges { get; set; }
-        DbSet<ShiftList> ShiftLists { get; set; }
-        DbSet<TipJournal> TipJournals { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<SalesJournal> SalesJournals { get; set; }
+        public DbSet<ShiftList> Shifts { get; set; }
+        public DbSet<ShiftChange> ShiftChanges { get; set; }
+        public DbSet<TipJournal> TipJournals { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb);Database=db;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=db;Trusted_Connection=True;");
         }
 
     }
